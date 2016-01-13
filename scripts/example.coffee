@@ -15,6 +15,13 @@ module.exports = (robot) ->
     robot.hear /ドーナツ/, (msg) ->
       msg.send "どんどんドーナツどーんといこー"
 
+    robot.respond /pokemon (.*)/i, (msg) ->
+        index = msg.match[1]
+        request = msg.http("http://pokeapi.co/api/v1/pokemon/#{index}/").get()
+        request (err, res, body) ->
+            data = JSON.parse body
+            msg.send "#{data.name}"
+
   # robot.hear /badger/i, (res) ->
   #   res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
   #
