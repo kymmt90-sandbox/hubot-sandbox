@@ -17,10 +17,14 @@ module.exports = (robot) ->
 
     robot.respond /pokemon (.*)/i, (msg) ->
         index = msg.match[1]
-        request = msg.http("http://pokeapi.co/api/v1/pokemon/#{index}/").get()
-        request (err, res, body) ->
+        pokedex_request = msg.http("http://pokeapi.co/api/v1/pokemon/#{index}/").get()
+        pokedex_request (err, res, body) ->
             data = JSON.parse body
             msg.send "#{data.name}"
+        sprite_request = msg.http("http://pokeapi.co/api/v1/sprite/#{index}/").get()
+        sprite_request (err, res, body) ->
+            data = JSON.parse body
+            msg.send "http://pokeapi.co#{data.image}"
 
   # robot.hear /badger/i, (res) ->
   #   res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
