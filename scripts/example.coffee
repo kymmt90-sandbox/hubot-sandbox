@@ -16,12 +16,12 @@ module.exports = (robot) ->
       msg.send "どんどんドーナツどーんといこー"
 
     robot.respond /pokemon (.*)/i, (msg) ->
-        index = msg.match[1]
+        index = parseInt(msg.match[1], 10)
         pokedex_request = msg.http("http://pokeapi.co/api/v1/pokemon/#{index}/").get()
         pokedex_request (err, res, body) ->
             data = JSON.parse body
             msg.send "#{data.name}"
-        sprite_request = msg.http("http://pokeapi.co/api/v1/sprite/#{index}/").get()
+        sprite_request = msg.http("http://pokeapi.co/api/v1/sprite/#{index + 1}/").get()
         sprite_request (err, res, body) ->
             data = JSON.parse body
             msg.send "http://pokeapi.co#{data.image}"
